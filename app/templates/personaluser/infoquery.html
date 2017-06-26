@@ -1,0 +1,82 @@
+{% extends "personaluser/personbase.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+{{ super() }}
+<div class="row">
+        <button class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#myModal">筛选</button>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel">条件筛选</h4>
+                    </div>
+                    <div class="modal-body">
+                        {{ wtf.quick_form(form) }}
+                        <a class="text-muted">按下 ESC 按钮可退出。</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <script>
+            $(function () { $('#myModal').modal({keyboard: true}) });
+        </script>
+        <div class="col-xs-3" id="myScrollspy">
+            <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="200">
+                <li><a href="{{ url_for('personaluser.person_home') }}">账户余额</a></li>
+                <li><a href="{{ url_for('personaluser.person_carmanagement') }}">车辆管理</a></li>
+                <li class="active"><a href="{{ url_for('personaluser.person_infoquery') }}">记录查询</a></li>
+            </ul>
+        </div>
+        <div class="col-xs-1">
+            </br>
+            </br>
+            </br>
+            </br>
+            </br>
+            </br>
+            </br>
+            </br>
+        </div>
+        {% if se %}
+        <h1>筛选结果：</h1>
+        <a href="{{ url_for('personaluser.person_infoquery') }}"><button type="button" class="btn btn-success pull-right">结束筛选</button></a>
+        {% endif %}
+        <div class="col-xs-8">
+            {% if cost_info|length == 0 %}
+            </br>
+            </br>
+            <h1 class="text-center">暂无记录</h1>
+            {% else %}
+            </br>
+            <table class="table table-hover">
+                <caption>账户交易记录</caption>
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>时间</th>
+                        <th>项目名</th>
+                        <th>金额</th>
+                        <th>交易前金额</th>
+                        <th>交易后金额</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for cost in cost_info %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ cost.time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <td>{{ cost.reason }}</td>
+                    <td>{{ cost.amount/100 }}</td>
+                    <td>{{ cost.before_amount/100 }}</td>
+                    <td>{{ cost.after_amount/100 }}</td>
+                </tr>
+            {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+        </div>
+</div>
+{% endblock %}
+

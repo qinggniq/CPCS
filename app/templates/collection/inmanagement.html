@@ -1,0 +1,52 @@
+{% extends "collection/collectionbase.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+{{ super() }}
+<div class="row">
+        <div class="col-xs-3" id="myScrollspy">
+            <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="200">
+                <li><a href="{{ url_for('collection.collection_home') }}">充值管理</a></li>
+                <li class="active"><a href="{{ url_for('collection.collection_inmanagement') }}">入库管理</a></li>
+                <li><a href="{{ url_for('collection.collection_outmanagement') }}">出库管理</a></li>
+                <li><a href="{{ url_for('collection.collection_others') }}">其他交易</a></li>
+            </ul>
+        </div>
+        <div class="col-xs-4">
+            <h1>车辆入库管理</h1>
+            </br>
+            {{ wtf.quick_form(form) }}
+        </div>
+        <div class="col-xs-1">
+        </div>
+        <div class="col-xs-4">
+            {% if inlist|length == 0 %}
+            </br>
+            </br>
+            <h1>暂无车辆</h1>
+            {% else %}
+            </br>
+            <table class="table table-hover">
+                <caption>库内车辆信息</caption>
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>车号</th>
+                        <th>入库时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for carin in inlist %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ carin.name }}</td>
+                        <td>{{ carin.in_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+</div>
+{% endblock %}
+

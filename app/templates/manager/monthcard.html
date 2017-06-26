@@ -1,0 +1,73 @@
+{% extends "manager/managerbase.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+{{ super() }}
+<div class="row">
+        <div class="col-xs-3" id="myScrollspy">
+            <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="200">
+                <li><a href="{{ url_for('manager.manager_home') }}">变更付费</a></li>
+                <li class="active"><a href="{{ url_for('manager.manager_monthcard') }}">月卡管理</a></li>
+                <li><a href="{{ url_for('manager.manager_info') }}">导出信息</a></li>
+            </ul>
+        </div>
+        <div class="col-xs-1">
+            </br>
+            </br>
+            </br>
+            </br>
+        </div>
+        <div class="col-xs-8">
+            <button class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#myModal">添加方案</button>
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title" id="myModalLabel">添加方案</h4>
+                        </div>
+                        <div class="modal-body">
+                            {{ wtf.quick_form(form) }}
+                            <a class="text-muted">按下 ESC 按钮可退出。</a>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <script>
+                $(function () { $('#myModal').modal({keyboard: true}) });
+            </script>
+            {% if monthcard_info|length == 0 %}
+            </br>
+            </br>
+            <h1>您未设定任何月卡方案</h1>
+            {% else %}
+            </br>
+        <table class="table table-hover">
+            <caption>月卡方案信息</caption>
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>名称</th>
+                    <th>月数</th>
+                    <th>费用</th>
+                    <th>删除</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for monthcard in monthcard_info %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ monthcard.name }}</td>
+                    <td>{{ monthcard.month }}</td>
+                    <td>{{ monthcard.cost/100 }}元</td>
+                    <td><a href="{{ url_for('manager.manager_monthcarddel', token=monthcard.id) }}"><button type="button" class="btn btn-danger">删除</button></a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            {% endif %}
+        </table>
+
+        </div>
+</div>
+{% endblock %}
+

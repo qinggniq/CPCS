@@ -1,0 +1,95 @@
+{% extends "left_nav_base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}用户权限调整{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    </br>
+    <h1>欢迎，{{ current_user.username }}!</h1>
+    <h4>这是您的用户权限调整页面。</h4>
+
+</div>
+<div class="row">
+
+   <button class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#myModal">添加用户</button>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel">添加用户</h4>
+                    </div>
+                    <div class="modal-body">
+                        {{ wtf.quick_form(form) }}
+                        <a class="text-muted">按下 ESC 按钮可退出。</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <script>
+            $(function () { $('#myModal').modal({keyboard: true}) });
+        </script>
+    <button class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#myModal1">搜索用户</button>
+        <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModal1Label" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModal1Label">搜索</h4>
+                    </div>
+                    <div class="modal-body">
+                        {{ wtf.quick_form(form1) }}
+                        <a class="text-muted">按下 ESC 按钮可退出。</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <script>
+            $(function () { $('#myModal').modal({keyboard: true}) });
+        </script>
+            {% if ch %}
+            <h1>筛选结果：</h1>
+            <a href="{{ url_for('admin.admin_home') }}"><button type="button" class="btn btn-success pull-right">结束搜索</button></a>
+            {% endif %}
+            {% if userlist|length == 0 %}
+            </br>
+            </br>
+            <h1 class="text-center">暂无用户</h1>
+            {% else %}
+            <table class="table table-hover">
+                <caption>用户信息</caption>
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>用户名</th>
+                        <th>邮箱地址</th>
+                        <th>账户余额</th>
+                        <th>邮箱确认</th>
+                        <th>用户角色</th>
+                        <th>收费员角色</th>
+                        <th>经理角色</th>
+                        <th>删除</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for user in userlist %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.balance/100 }}元</td>
+                        <td>{% if user.confirmed %}已确认{% else %}<a href="{{ url_for('admin.admin_confirm', token=user.id) }}"><button type="button" class="btn btn-success">确认</button></a>{% endif %}</td>
+                        <td>{% if user.role_id==3 or user.id==current_user.id %}<button type="button" class="btn btn-primary" disabled="disabled">当前</button></a>{% else %}<a href="{{ url_for('admin.admin_change', token=user.id, token1=3) }}"><button type="button" class="btn btn-primary">变更</button></a>{% endif %}</td>
+                        <td>{% if user.role_id==2 or user.id==current_user.id %}<button type="button" class="btn btn-primary" disabled="disabled">当前</button></a>{% else %}<a href="{{ url_for('admin.admin_change', token=user.id, token1=2) }}"><button type="button" class="btn btn-primary">变更</button></a>{% endif %}</td>
+                        <td>{% if user.role_id==1 or user.id==current_user.id %}<button type="button" class="btn btn-primary" disabled="disabled">当前</button></a>{% else %}<a href="{{ url_for('admin.admin_change', token=user.id, token1=1) }}"><button type="button" class="btn btn-primary">变更</button></a>{% endif %}</td>
+                        <td>{% if user.id==current_user.id %}管理员{% else %}<a href="{{ url_for('admin.admin_del', token=user.id) }}"><button type="button" class="btn btn-danger">删除</button></a>{% endif %}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+</div>
+
+{% endblock %}

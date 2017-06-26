@@ -1,0 +1,8 @@
+<p>亲爱的 {{ user.username }}，</p>
+<p>欢迎使用本系统！</p>
+<p>点击以确认您的邮箱： <a href="{{ url_for('auth.confirm', token=token, _external=True) }}">这里</a>。</p>
+<p>当然，您也可以将一下链接拷贝至您的浏览器中：</p>
+<p>{{ url_for('auth.confirm', token=token, _external=True) }}</p>
+<p>感谢您的支持！</p>
+<p>xrc</p>
+<p><small>注意：请不要向本邮箱回复。</small></p>

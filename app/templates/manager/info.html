@@ -1,0 +1,38 @@
+{% extends "manager/managerbase.html" %}
+
+{% block page_content %}
+{{ super() }}
+<div class="row">
+        <div class="col-xs-3" id="myScrollspy">
+            <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="200">
+                <li><a href="{{ url_for('manager.manager_home') }}">变更付费</a></li>
+                <li><a href="{{ url_for('manager.manager_monthcard') }}">月卡管理</a></li>
+                <li class="active"><a href="{{ url_for('manager.manager_info') }}">导出信息</a></li>
+            </ul>
+        </div>
+    <div class="col-xs-3">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+        <div class="col-xs-4">
+            <br>
+            <br>
+            <a href="{{ url_for('manager.manager_excel1') }}"><button type="button" class="btn btn-lg btn-primary">导出交易记录到excel文件</button></a>
+            <br>
+            <br>
+            <a href="{{ url_for('manager.manager_excel2') }}"><button type="button" class="btn btn-lg btn-primary">导出用户记录到excel文件</button></a>
+            <br>
+            <br>
+            <a href="{{ url_for('manager.manager_excel3') }}"><button type="button" class="btn btn-lg btn-primary">导出停车记录到excel文件</button></a>
+            <br>
+            <br>
+            <a href="{{ url_for('manager.manager_excel4') }}"><button type="button" class="btn btn-lg btn-primary">导出车辆信息到excel文件</button></a>
+        </div>
+</div>
+{% endblock %}
+

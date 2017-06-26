@@ -1,0 +1,34 @@
+{% extends "personaluser/personbase.html" %}
+
+{% block page_content %}
+{{ super() }}
+<div class="row">
+        <div class="col-xs-4" id="myScrollspy">
+            <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="200">
+                <li class="active"><a href="{{ url_for('personaluser.person_home') }}">账户余额</a></li>
+                <li><a href="{{ url_for('personaluser.person_carmanagement') }}">车辆管理</a></li>
+                <li><a href="{{ url_for('personaluser.person_infoquery') }}">记录查询</a></li>
+            </ul>
+        </div>
+    <div class="col-xs-8">
+        </br>
+        <h1>您当前的账户余额为：</h1>
+        <h1 class="text-center">￥{{ current_user.balance/100 }}元</h1>
+        </br>
+        </br>
+        </br>
+        </br>
+        {% if current_user.balance >= 20000 %}
+        <h2 class="text-success">您的账户余额充足，可放心使用。</h2>
+        {% endif %}
+        {% if current_user.balance < 1000 and current_user.balance > 0 %}
+        <h2 class="text-warning">您的账户余额不足10元，请尽快充值！</h2>
+        {% endif %}
+        {% if current_user.balance == 0 %}
+        <h2 class="text-danger">您的账户余额已用完，请尽快充值！</h2>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+

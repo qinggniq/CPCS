@@ -1,0 +1,11 @@
+亲爱的 {{ user.username }}，
+
+您可以将一下链接拷贝至您的浏览器中以确认您的邮箱地址：
+
+{{ url_for('auth.change_email', token=token, _external=True) }}
+
+感谢您的支持，
+
+xrc
+
+注意：请不要向本邮箱回复。

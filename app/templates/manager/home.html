@@ -1,0 +1,42 @@
+{% extends "manager/managerbase.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+{{ super() }}
+<div class="row">
+        <div class="col-xs-4" id="myScrollspy">
+            <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="200">
+                <li class="active"><a href="{{ url_for('manager.manager_home') }}">变更付费</a></li>
+                <li><a href="{{ url_for('manager.manager_monthcard') }}">月卡管理</a></li>
+                <li><a href="{{ url_for('manager.manager_info') }}">导出信息</a></li>
+            </ul>
+        </div>
+        <div class="col-xs-4">
+            {{ wtf.quick_form(form) }}
+        </div>
+        <div class="col-xs-1"></div>
+        <div class="col-xs-3">
+            <h3>目前的收费方案</h3>
+            {% if nowsolution.freemins != 0 %}
+            <h5>免费停车时间为{{ nowsolution.freemins }}分钟</h5>
+            {% endif %}
+            {% if nowsolution.mincost != 0 or (nowsolution.daycost==0 and nowsolution.hourcost==0) %}
+            <h5>每满1分钟收费{{ nowsolution.mincost/100 }}元</h5>
+            {% endif %}
+            {% if nowsolution.hourcost != 0 %}
+            <h5>每满1小时收费{{ nowsolution.hourcost/100 }}元</h5>
+            {% endif %}
+            {% if nowsolution.daycost != 0 %}
+            <h5>每满1天收费{{ nowsolution.daycost/100 }}元</h5>
+            {% endif %}
+            {% if nowsolution.leastcost != 0 %}
+            <h5>最低收费为{{ nowsolution.leastcost/100 }}元</h5>
+            {% endif %}
+            {% if nowsolution.leastcostmins != 0 %}
+            <h5>最低收费可停车时间为{{ nowsolution.leastcostmins }}分钟</h5>
+            {% endif %}
+            <h5>月卡充值{% if nowsolution.monthcard %}已开启{% else %}未开启{% endif %}</h5>
+        </div>
+</div>
+{% endblock %}
+

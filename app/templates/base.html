@@ -1,0 +1,83 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}系统{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand">停车场收费系统</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="{{ url_for('main.index') }}">主页</a></li>
+                {% if current_user.can(Permission.USERUSE) %}
+                <li><a href="{{ url_for('personaluser.person_home') }}">个人管理</a></li>
+                {% endif %}
+                {% if current_user.can(Permission.BASICMANAGEMENT) %}
+                <li><a href="{{ url_for('collection.collection_home') }}">收费管理</a></li>
+                {% endif %}
+                {% if current_user.can(Permission.ADVANCEMANAGEMENT) %}
+                <li><a href="{{ url_for('manager.manager_home') }}">高级管理</a></li>
+                {% endif %}
+                {% if current_user.can(Permission.ADMINISTER) %}
+                <li><a href="{{ url_for('admin.admin_home') }}">用户权限管理</a></li>
+                {% endif %}
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if current_user.is_authenticated %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ current_user.username }}的账户 <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('auth.change_password') }}">变更密码</a></li>
+                        <li><a href="{{ url_for('auth.change_email_request') }}">变更邮箱</a></li>
+                        <li><a href="{{ url_for('auth.logout') }}">退出系统</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li><a href="{{ url_for('auth.login') }}">登录系统</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    </br>
+    </br>
+    </br>
+    </br>
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    {% block page_content %}
+
+    {% endblock %}
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ moment.include_moment() }}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "left_nav_base.html" %}
+
+{% block title %}个人管理{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    </br>
+    <h1>欢迎，{{ current_user.username }}!</h1>
+    <h4>这是您的个人管理页面。</h4>
+</div>
+{% endblock %}

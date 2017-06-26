@@ -1,0 +1,27 @@
+{% extends "collection/collectionbase.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+{{ super() }}
+<div class="row">
+        <div class="col-xs-4" id="myScrollspy">
+            <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="200">
+                <li><a href="{{ url_for('collection.collection_home') }}">充值管理</a></li>
+                <li><a href="{{ url_for('collection.collection_inmanagement') }}">入库管理</a></li>
+                <li class="active"><a href="{{ url_for('collection.collection_outmanagement') }}">出库管理</a></li>
+                <li><a href="{{ url_for('collection.collection_others') }}">其他管理</a></li>
+            </ul>
+        </div>
+        <div class="col-xs-8">
+            <h3>状态： {{ message['info'] }}</h3>
+            <h3>总计费用： {{ message['payment']/100 }}元</h3>
+            <h3>实际应缴费用： {{ message['realpay']/100 }}元</h3>
+            <div class="row">
+                <div class="col-xs-4">
+                {{ wtf.quick_form(form) }}
+                </div>
+            </div>
+        </div>
+</div>
+{% endblock %}
+

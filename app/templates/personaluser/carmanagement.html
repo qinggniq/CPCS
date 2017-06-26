@@ -1,0 +1,88 @@
+{% extends "personaluser/personbase.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block page_content %}
+{{ super() }}
+<div class="row">
+        <div class="col-xs-3" id="myScrollspy">
+            <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="200">
+                <li><a href="{{ url_for('personaluser.person_home') }}">账户余额</a></li>
+                <li class="active"><a href="{{ url_for('personaluser.person_carmanagement') }}">车辆管理</a></li>
+                <li><a href="{{ url_for('personaluser.person_infoquery') }}">记录查询</a></li>
+            </ul>
+        </div>
+    <div class="col-xs-1">
+            </br>
+            </br>
+            </br>
+            </br>
+            </br>
+            </br>
+            </br>
+            </br>
+    </div>
+    <div class="col-xs-8">
+        <button class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#myModal">添加车辆</button>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel">添加车辆</h4>
+                    </div>
+                    <div class="modal-body">
+                        {{ wtf.quick_form(form) }}
+                        <a class="text-muted">按下 ESC 按钮可退出。</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <script>
+            $(function () { $('#myModal').modal({keyboard: true}) });
+        </script>
+
+        {% if car_info|length == 0 %}
+        </br>
+        </br>
+        <h1>您尚未绑定车辆</h1>
+        {% else %}
+        </br>
+        <table class="table table-hover">
+            <caption>车辆信息</caption>
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>车牌号</th>
+                    <th>月卡有效期</th>
+                    {% if cardquery %}
+                    <th>月卡充值</th>
+                    {% endif %}
+                    <th>删除</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for car in car_info %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ car.name }}</td>
+                    <td>
+                        {% if car.monthcard_date < today %}
+                        失效
+                        {% else %}
+                        {{ car.monthcard_date }}
+                        {% endif %}
+                    </td>
+                    {% if cardquery %}
+                    <td><a href="{{ url_for('personaluser.person_monthcardpay', token=car.id) }}"><button type="button" class="btn btn-success">续费</button></a></td>
+                    {% endif %}
+                    <td><a href="{{ url_for('personaluser.person_cardel', token=car.id) }}"><button type="button" class="btn btn-danger">删除</button></a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+

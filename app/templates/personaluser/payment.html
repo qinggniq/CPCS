@@ -1,0 +1,22 @@
+{% extends "personaluser/personbase.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block page_content %}
+{{ super() }}
+<div class="row">
+        <div class="col-xs-4" id="myScrollspy">
+            <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="200">
+                <li><a href="{{ url_for('personaluser.person_home') }}">账户余额</a></li>
+                <li class="active"><a href="{{ url_for('personaluser.person_carmanagement') }}">车辆管理</a></li>
+                <li><a href="{{ url_for('personaluser.person_infoquery') }}">记录查询</a></li>
+            </ul>
+        </div>
+    <div class="col-xs-8">
+        <h3>车号：{{ car.name }}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp当前月卡有效期至：{% if car.monthcard_date < today %}已失效{% else %}{{ car.monthcard_date }}{% endif %}</h3>
+
+        {{ wtf.quick_form(form) }}
+    </div>
+</div>
+{% endblock %}
+
