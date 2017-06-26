@@ -7,16 +7,16 @@ class Config:
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    MAIL_SERVER = 'smtp.163.com'#'smtp-mail.outlook.com'
+    MAIL_SERVER = 'smtp.smtp.com'
     MAIL_PORT = 25#587
     MAIL_USE_TLS = False#True
     MAIL_USE_SSL = False
     MAIL_DEBUG = True
-    MAIL_USERNAME = '17745169528@163.com'#'system23333@outlook.com' #os.environ.get('MAIL_USERNAME')
-    MAIL_PASSWORD = 'xurongchen123'#'1qaz!QAZ' #os.environ.get('MAIL_PASSWORD')
+    MAIL_USERNAME = ' username@xxx.com' #os.environ.get('MAIL_USERNAME')
+    MAIL_PASSWORD = 'password'#'1qaz!QAZ' #os.environ.get('MAIL_PASSWORD')
     FLASKY_MAIL_SUBJECT_PREFIX = '[System]'
-    FLASKY_MAIL_SENDER = 'System Admin <17745169528@163.com>'
-    FLASKY_ADMIN = '1459572152@qq.com'#os.environ.get('FLASKY_ADMIN')
+    FLASKY_MAIL_SENDER = 'System Admin <username@xxx.com>'
+    FLASKY_ADMIN = 'admin@xxx.com'#os.environ.get('FLASKY_ADMIN')
 
     @staticmethod
     def init_app(app):
