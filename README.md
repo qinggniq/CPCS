@@ -1,5 +1,5 @@
 # CPCS
-Car Parking Charge System
+Car Parking Charge System (based on Python2.7)
 
 
 ## 部署：
@@ -19,4 +19,38 @@ Car Parking Charge System
 4、  安装所需的python包：
 
      `pip install -r requirements.txt`
+
+5、  初始化数据库
+
+    python manager.py shell
+    >>>db.create_all()
+    >>>Role.insert_roles()
+    >>>Solution.set()
+    
+    数据库删除操作：
+    >>>db.drop_all()
+    
+6、 启动服务：
+    
+    1）
+    测试（本机127.0.0.1::5000）：
+    python manager.py runserver
+    或（对同级的IP开放，IP:5000）
+    python manager.py runserver --host 0.0.0.0
+    
+    2）
+    使用Gornicorn：
+    gunicorn rocket:app -p rocket.pid -b 0.0.0.0:8000 -D
+    停止服务进程：
+    kill -HUP `cat rocket.pid`
+    kill `cat rocket.pid`
+
+
+
+
+
+
+
+
+
 
