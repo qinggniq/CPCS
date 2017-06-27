@@ -33,7 +33,6 @@ Car Parking Charge System (based on Python2.7)
 4、  安装所需的python包：
 
      `pip install -r requirements.txt` 
-     <br>
 
 5、  初始化数据库
 
