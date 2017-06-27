@@ -3,7 +3,12 @@ Car Parking Charge System (based on Python2.7)
 
 
 ## 部署：
-1、  git clone
+1、  git clone 或 pscp上传
+     
+     1)
+     git clone 
+     2)
+     pscp D:\python root@1.2.3.4:/python
 
 2、  安装venv虚拟环境
 
