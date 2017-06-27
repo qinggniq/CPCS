@@ -6,14 +6,13 @@ Car Parking Charge System (based on Python2.7)
 1、  git clone 或 pscp上传
      
      1)
-     git clone 
+     git clone https://github.com/xurongchen/CPCS.git
      2)
      pscp D:\python root@1.2.3.4:/python
 
 2、  安装venv虚拟环境
 
-     `LINUX命令：sudo apt-get install python-virtualenv`
-     `MACOS命令：sudo easy_install virtualenv`
+     LINUX命令：sudo apt-get install python-virtualenv\nMACOS命令：sudo easy_install virtualenv
      `WINDOWS命令：从 https://github.com/pypa/setuptools 下载脚本，文件夹下执行 easy_install virtualenv`
  
 3、  进入venv虚拟环境
@@ -49,13 +48,6 @@ Car Parking Charge System (based on Python2.7)
     停止服务进程：
     kill -HUP `cat rocket.pid`
     kill `cat rocket.pid`
-
-
-
-
-
-
-
 
 
 
