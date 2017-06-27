@@ -37,7 +37,6 @@ Car Parking Charge System (based on Python2.7)
 5、  初始化数据库
 
     python manager.py shell 
-    <br>
     >>>db.create_all() 
     <br>
     >>>Role.insert_roles() 
